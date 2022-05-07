@@ -1,0 +1,18 @@
+
+{if $lists}
+<div class="our-business">
+    <div class="business fsc">
+        {volist name='lists' id='vo'}
+        <div class="business-item">
+            <img src="__UPLOAD_PATH__/{$vo.photo}" alt="" class="b1">
+            <div class="business-cont">
+                <div class="business-tit"> {$vo.title} </div>
+                <div class="business-summary"> {$vo.content|leftstr_html=30} </div>
+                <a  class="business-more" href="{:getDetailUrl($vo.id,$vo.website)}">查看详情</a>
+            </div>
+        </div>
+        {/volist}
+    </div>
+</div>
+
+{/if}

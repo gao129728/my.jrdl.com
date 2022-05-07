@@ -1,0 +1,41 @@
+<script>
+    (function (doc, win) {
+        var docEl = doc.documentElement,
+            resizeEvt = 'orientationchange' in window ? 'orientationchange' : 'resize',
+            recalc = function () {
+                var clientWidth = docEl.clientWidth;
+                if (!clientWidth) return;
+                var fontSize = 100 * (clientWidth / 1640);
+                fontSize = (fontSize > 100) ? 100 : fontSize;
+                docEl.style.fontSize = fontSize + 'px';
+                var dpi = window.devicePixelRatio;
+                docEl.setAttribute('data-dpi', dpi);
+            };
+        recalc();
+        if (!doc.addEventListener) return;
+        win.addEventListener(resizeEvt, recalc, false);
+    })(document, window);
+</script>
+<!--响应式菜单-->
+<div class="pc-nav">
+    <span class="close iconfont icon-close"></span>
+    <div class="mobile-block g-in sub-menu">
+        <ul>
+            <li class="js-m delay01">
+                <a class="tit" href="/" title="首页">首页</a>
+            </li>
+            {volist name="nav_cate" id="nav"}
+            <li class="js-m delay01">
+                <div class="tit sub-tit" title="关于我们">{$nav.name}</div>
+                <div class="sec-list">
+                    {volist name='nav.sub' id='vo'}
+                    <p>
+                        <a href="{$vo.url}" title="">{$vo.name}</a>
+                    </p>
+                    {/volist}
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>

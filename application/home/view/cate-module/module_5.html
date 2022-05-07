@@ -1,0 +1,37 @@
+<!--视频-->
+<div class="container">
+    <!--二级目录-->
+    {include file="public/sub_menu" /}
+
+    <div class="video g-in">
+        {if $subCur neq 29}
+        <video id="video" class="video-js vjs-default-skin" controls preload="auto" poster="__UPLOAD_PATH__/{$one_video.photo}"
+               data-setup="{}">
+            <source src="__UPLOAD_FILE__/{$one_video.annex}" type='video/mp4'/>
+            <!--  <p class="vjs-no-js">播放视频需要启用 JavaScript，推荐使用支持HTML5的浏览器访问。</p>
+        <track kind="captions" src="demo.captions.vtt" srclang="en" label="English"></track>
+        <track kind="subtitles" src="demo.captions.vtt" srclang="en" label="English"></track> -->
+        </video>
+        <div class="txt clearfix">
+            <p>宣传片下载地址：
+                <a href="{$one_video.download_url}"
+                   target="_blank">{$one_video.download_url}</a></p>
+            <p>密码：<em>{$one_video.get_code}</em></p>
+        </div>
+        <h2>更多视频</h2>
+        {else}
+        {/if}
+        <ul class="clearfix">
+            {volist name="video_lists" id="vl"}
+            <li>
+                <a href="{:getDetailUrl($vl.id,$vl.website)}">
+                    <span></span>
+                    <img src="__UPLOAD_PATH__/{$vl.photo}" alt="{$vl.title}"/>
+                    <p>{$vl.title}</p>
+                </a>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+</div>
+

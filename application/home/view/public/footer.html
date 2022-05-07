@@ -1,0 +1,44 @@
+<div class="footer">
+    <div class="mes clearfix">
+        <div class="mes-z clearfix">
+            {volist name="nav_cate" id="nav" key='k'}
+            {if ($k eq 1)||($k eq 3)||($k eq 5)||($k eq 7)||($k eq 11)}
+            {else /}
+            <dl>
+                <dt><a href="{$nav.url}">{$nav.name}</a></dt>
+                {volist name='nav.sub' id='vo'}
+                <dd><a href="{$vo.url}">{$vo.name}</a></dd>
+                {/volist}
+            </dl>
+            {/if}
+            {/volist}
+        </div>
+        <div class="mes-y">
+            <img src="__UPLOAD_PATH__/{$config.web_site_qrcode}" alt="关注我们"/>
+            <p>关注我们</p>
+        </div>
+    </div>
+    <div class="copyright clearfix">
+        <div class="c-z"><a href="{:url('home/sitemap/sitemap')}">网站地图</a>&emsp;|&emsp;<a href="/home/category/index/id/11">联系我们</a></div>
+        {$config.web_site_copy}
+    </div>
+</div>
+<div class="u-mask hide"></div>
+
+
+<script>
+    $(function () {
+        $('.ico').bind('click', function () {
+            $('body').addClass('z-open');
+            $('.u-mask').removeClass('hide');
+        })
+
+        $('.u-mask').bind('click', function () {
+            $('body').removeClass('z-open');
+            $('.u-mask').addClass('hide');
+        })
+    })
+</script>
+<script>
+    $.ajax({url: 'hit_counter.php', data: {page: document.location.pathname}})
+</script>

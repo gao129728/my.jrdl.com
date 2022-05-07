@@ -1,0 +1,85 @@
+<!--案例-->
+<div class="container sd">
+    <div class="contact g-in">
+        <iframe width="100%" height="600" src="__IMG__/map.html" frameborder="0"></iframe>
+        <p id="loc" style="height:110px;"></p>
+    </div>
+    <div class="choice g-in" style="padding-top:0;">
+        <ul>
+            <li id="p1"><span>区域：</span>
+                <a data-id="" class='on' onclick="getDatas(this)">全部</a>
+                {volist name="area_lists" id="vo" key='j'}
+                <a data-id="{$vo.id}" onclick="getDatas(this)">{$vo.title}</a>
+                {/volist}
+            </li>
+            <li id="p2"><span>类型：</span>
+                <a data-type="" class='on'onclick="getData(this)">全部</a>
+                {volist name="type_lists" id="vo" key='j'}
+                <a data-type="{$vo.id}" onclick="getData(this)">{$vo.name}</a>
+                {/volist}
+            </li>
+        </ul>
+    </div>
+    <script>
+        getAllData();
+
+        function getDatas(that) {
+            var _this = $(that);
+            _this.siblings().removeClass('on');
+            _this.addClass('on');
+            getAllData();
+        }
+
+        function getData(that) {
+            var _this = $(that);
+            _this.siblings().removeClass('on');
+            _this.addClass('on');
+            getAllData();
+        }
+
+        function getAllData() {
+            var area = $('#p1').find('a.on').data('id');
+            var type = $('#p2').find('a.on').data('type');
+            $.ajax({
+                url: '{:url("home/index/getData")}',
+                data: 'area=' + area + '&type=' + type,
+                type: 'post',
+                dataType: 'json',
+                success: function (res) {
+
+                    if (res.code > 0) {
+                        addHtml(res.data);
+                    }
+
+                }
+            })
+
+        }
+
+        function addHtml(DATA) {
+            console.log(DATA);
+            var htmls = "";
+            for (var i = 0; i < DATA.length; i++) {
+                var title = DATA[i].title;
+
+                htmls += '<dd class="clearfix">\n' +
+                         '<div class="p"><a href="/home/category/detail/id/' + DATA[i].id + '"><img src="__UPLOAD_PATH__/' + DATA[i].photo + '" alt="安徽省合肥胡大郢净水厂" /></a></div>\n' +
+                         '<div class="t">\n' +
+                         '<h3><a href="/home/category/detail/id/' + DATA[i].id + '">' + title + '</a></h3>\n' +
+                         '<div class="ii">\n'
+                           +DATA[i].intro +
+                         '</div>\n' +
+                         '</div>\n' +
+                         '</dd>';
+            }
+            $('#htmls').html(htmls);
+        }
+
+
+    </script>
+    <div class="pothoItem g-in clearfix">
+        <dl id="htmls">
+
+        </dl>
+    </div>
+</div>

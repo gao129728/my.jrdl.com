@@ -1,0 +1,566 @@
+﻿<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+
+<head>
+    <title>百度地图API显示多个标注点带提示的代码</title>
+    <script src="https://cdn.bootcss.com/jquery/3.4.1/jquery.min.js"></script>
+    <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=M6Z0Obru4jwGswmc9jgXniyO"></script>
+    <style type="text/css">
+        * {
+            margin: 0;
+            padding: 0;
+        }
+
+        a {
+            text-decoration: none;
+        }
+
+        .islabel {
+            color: #555;
+        }
+
+        .islabel:hover {
+            color: #0055a2;
+        }
+
+        .ui_city_change_top {
+            display: none;
+        }
+
+        .card {
+            position: relative;
+        }
+
+        .mapForm {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            z-index: 10;
+            height: 34px;
+        }
+
+        .mapForm .select {
+            display: block;
+            width: 200px;
+            height: 34px;
+            border: 0;
+            float: left;
+            margin-right: 10px;
+            background: #0168b7;
+            color: #fff;
+        }
+
+        .BMapLabel {
+            border: 1px solid #aaa !important;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="card">
+        <div class="mapForm">
+            <form action="" class="clearfix">
+                <select class="select" name="title"
+                    onchange="window.location='map.html?content=&title=' + this.options[this.selectedIndex].value;">
+                    <option value="">省份</option>
+
+                    <option value="安徽">安徽</option>
+
+                    <option value="江苏">江苏</option>
+
+                    <option value="浙江">浙江</option>
+
+                    <option value="山东">山东</option>
+
+                    <option value="广东">广东</option>
+
+                    <option value="内蒙古">内蒙古</option>
+
+                    <option value="湖南">湖南</option>
+
+                    <option value="云南">云南</option>
+
+                    <option value="新疆">新疆</option>
+
+                    <option value="陕西">陕西</option>
+
+                    <option value="山西">山西</option>
+
+                    <option value="河北">河北</option>
+
+                    <option value="河南">河南</option>
+
+                    <option value="福建">福建</option>
+
+                    <option value="湖北">湖北</option>
+                </select>
+                <select name="content" class="select"
+                    onchange="window.location='map.html?title=&content=' + this.options[this.selectedIndex].value;">
+                    <option value="">项目类型</option>
+                    <option value="47">市政污水</option>
+                    <option value="48">水环境综合整治</option>
+                    <option value="49">工业污水</option>
+                    <option value="50">村镇污水</option>
+                    <option value="51">设备制造</option>
+                    <option value="52">管网</option>
+                </select>
+            </form>
+        </div>
+        <div style="width:100%;height:600px;font-size:12px; border:1px solid #ccc; margin: 0 auto; box-sizing:border-box;" id="map">
+        </div>
+    </div>
+    <script type="text/javascript">
+        //创建和初始化地图函数：
+        function initMap() {
+            createMap();//创建地图
+            setMapEvent();//设置地图事件
+            addMapControl();//向地图添加控件
+            addMapOverlay();//向地图添加覆盖物
+        }
+        function createMap() {
+            map = new BMap.Map("map");
+            map.centerAndZoom(new BMap.Point(114.604748, 38.05118), 5);
+
+            function myFun(result) {
+                var cityName = result.name;
+                map.setCenter("cityName");
+                //alert("当前定位城市:" + cityName);
+            }
+            var myCity = new BMap.LocalCity();
+            myCity.get(myFun);
+        }
+        function setMapEvent() {
+            map.enableScrollWheelZoom();
+            map.enableKeyboard();
+            map.enableDragging();
+            map.enableDoubleClickZoom()
+        }
+        function addClickHandler(target, poi, window) {
+
+            //pop弹窗标题  
+            var title = '<div style="font-weight:bold;font-size:14px">' + poi.title + '</div>';
+            //pop弹窗信息  
+            var html = [];
+
+            html.push('<div style="text-align:left;margin:0;padding:0;">' + poi.content + ' </div>');
+            var infoWindow = new BMap.InfoWindow(html.join(""), { title: title, width: 200 });
+
+            target.addEventListener("click", function () {
+                target.openInfoWindow(infoWindow);
+            });
+
+
+            map.addEventListener("zoomend", function () {
+                var DiTu = this.getZoom();
+                $('a.islabel').parent()[DiTu >= 13 ? 'hide' : 'show']();
+            });
+        }
+
+        function addMapOverlay() {
+            var markers = [
+                {
+                    MingCheng: "云南水富云天化有限公司",
+                    content: "<a href='https://720yun.com/t/fdvkblqlpiy' target='_blank'><img src='upload/2022-02/164549783650405000.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/fdvkblqlpiy' target='_blank'>云南水富云天化有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 28.641286, lng: 104.411654 }
+                },
+                {
+                    MingCheng: "乌海国祯易嘉水环境治理有限公司",
+                    content: "<a href='https://720yun.com/t/22vkzhphrpw' target='_blank'><img src='upload/2022-02/164549706116488200.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/22vkzhphrpw' target='_blank'>乌海国祯易嘉水环境治理有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 39.683646, lng: 106.846359 }
+                },
+                {
+                    MingCheng: "徐河水质净化站",
+                    content: "<a href='https://720yun.com/t/8fvkzephzih' target='_blank'><img src='upload/2022-02/164421536880773600.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/8fvkzephzih' target='_blank'>徐河水质净化站</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.711209, lng: 117.297301 }
+                },
+                {
+                    MingCheng: "三七干渠水质净化站",
+                    content: "<a href='https://720yun.com/t/63vkzhpm7pb' target='_blank'><img src='upload/2022-02/164421543579612100.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/63vkzhpm7pb' target='_blank'>三七干渠水质净化站</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.818579, lng: 117.344057 }
+                },
+                {
+                    MingCheng: "宿州国祯污水处理有限公司",
+                    content: "<a href='https://720yun.com/t/f0vkzw7ws8y' target='_blank'><img src='upload/2022-02/164421550059659100.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/f0vkzw7ws8y' target='_blank'>宿州国祯污水处理有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 33.609435, lng: 117.06076 }
+                },
+                {
+                    MingCheng: "宁海国祯环保科技有限公司",
+                    content: "<a href='https://720yun.com/t/59vkzhphprl' target='_blank'><img src='upload/2022-02/164421556100666600.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/59vkzhphprl' target='_blank'>宁海国祯环保科技有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 29.257103, lng: 121.447416 }
+                },
+                {
+                    MingCheng: "故城国祯污水处理有限公司",
+                    content: "<a href='https://720yun.com/t/7cvkzhphpqh' target='_blank'><img src='upload/2022-02/164421562529949600.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/7cvkzhphpqh' target='_blank'>故城国祯污水处理有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 37.362354, lng: 115.922018 }
+                },
+                {
+                    MingCheng: "泗水国祯水务有限公司",
+                    content: "<a href='https://720yun.com/t/6evkzhphp7l' target='_blank'><img src='upload/2022-02/164421570964231400.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/6evkzhphp7l' target='_blank'>泗水国祯水务有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 35.661246, lng: 117.18398 }
+                },
+                {
+                    MingCheng: "新站高新区少荃湖综合治理工程（水生态修复）施工项目",
+                    content: "<a href='https://720yun.com/t/0bvkzhpm717' target='_blank'><img src='upload/2022-02/164421590525210900.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/0bvkzhpm717' target='_blank'>新站高新区少荃湖综合治理工程（水生态修复）施工项目</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.956262, lng: 117.390872 }
+                },
+                {
+                    MingCheng: "合肥市胡大郢污水处理厂",
+                    content: "<a href='https://720yun.com/t/93vkzhphrfm' target='_blank'><img src='upload/2022-02/164421599016260800.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://720yun.com/t/93vkzhphrfm' target='_blank'>合肥市胡大郢污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.804839, lng: 117.278363 }
+                },
+                {
+                    MingCheng: "合肥朱砖井污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/256znx94ddh/' target='_blank'><img src='upload/2021-04/161821271768854400.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/256znx94ddh/' target='_blank'>合肥朱砖井污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.864583, lng: 117.373561 }
+                },
+                {
+                    MingCheng: "亳州南部新区污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/ca38ebc5mas/' target='_blank'><img src='upload/2020-11/160640055024944200.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/ca38ebc5mas/' target='_blank'>亳州南部新区污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 33.787717, lng: 115.73585 }
+                },
+                {
+                    MingCheng: "铜陵黑砂河降氨氮工程项目",
+                    content: "<a href='http://www.expoon.com/e/4av9plv7gg1/' target='_blank'><img src='upload/2020-11/160640064176213200.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/4av9plv7gg1/' target='_blank'>铜陵黑砂河降氨氮工程项目</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 30.936469, lng: 117.804584 }
+                },
+                {
+                    MingCheng: "南京市江宁区泵站前池水质服务包一项目",
+                    content: "<a href='http://www.expoon.com/e/kxl1vpgnd8g/' target='_blank'><img src='upload/2020-11/160640065078091900.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/kxl1vpgnd8g/' target='_blank'>南京市江宁区泵站前池水质服务包一项目</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.881909, lng: 118.904844 }
+                },
+                {
+                    MingCheng: "麦王环境煤化工废水零排放及分质结晶项目",
+                    content: "<a href='http://www.expoon.com/e/ukobtb8glfu/' target='_blank'><img src='upload/2020-11/160640066250756400.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/ukobtb8glfu/' target='_blank'>麦王环境煤化工废水零排放及分质结晶项目</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 37.586488, lng: 112.298366 }
+                },
+                {
+                    MingCheng: "麦王环境钢铁行业供水及废水处理和回用工程",
+                    content: "<a href='http://www.expoon.com/e/haw8uz5zlb8/' target='_blank'><img src='upload/2020-11/160640067760541000.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/haw8uz5zlb8/' target='_blank'>麦王环境钢铁行业供水及废水处理和回用工程</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 40.942145, lng: 117.724041 }
+                },
+                {
+                    MingCheng: "东莞市万江区天地信达水务有限公司",
+                    content: "<a href='http://www.expoon.com/e/0kcp5el6jjo/' target='_blank'><img src='upload/2020-11/160640068732627700.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/0kcp5el6jjo/' target='_blank'>东莞市万江区天地信达水务有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 23.04408, lng: 113.669731 }
+                },
+                {
+                    MingCheng: "江门市国祯污水处理有限公司",
+                    content: "<a href='http://www.expoon.com/e/wq42bw41ky4/' target='_blank'><img src='upload/2020-11/160640069798870800.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/wq42bw41ky4/' target='_blank'>江门市国祯污水处理有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 22.562176, lng: 113.148917 }
+                },
+                {
+                    MingCheng: "江门市新会区东郊污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/qfnbiwx0ifb/' target='_blank'><img src='upload/2020-11/160640071060952000.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/qfnbiwx0ifb/' target='_blank'>江门市新会区东郊污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 22.515616, lng: 113.085183 }
+                },
+                {
+                    MingCheng: "衡水国祯污水处理有限公司",
+                    content: "<a href='http://www.expoon.com/e/7swn5nv351k/' target='_blank'><img src='upload/2020-11/160640072320805500.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/7swn5nv351k/' target='_blank'>衡水国祯污水处理有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 37.82791, lng: 115.907414 }
+                },
+                {
+                    MingCheng: "兰考国祯水务运营有限公司",
+                    content: "<a href='http://www.expoon.com/e/jy9wpl1qmnj/' target='_blank'><img src='upload/2020-11/160640073286494400.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/jy9wpl1qmnj/' target='_blank'>兰考国祯水务运营有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 34.800483, lng: 114.829344 }
+                },
+                {
+                    MingCheng: "汨罗市城市生活污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/i9489n11gzz/' target='_blank'><img src='upload/2020-11/160640074297522000.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/i9489n11gzz/' target='_blank'>汨罗市城市生活污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 28.834378, lng: 113.075681 }
+                },
+                {
+                    MingCheng: "泗阳县华海水处理有限公司",
+                    content: "<a href='http://www.expoon.com/e/kukfjo597om/' target='_blank'><img src='upload/2020-11/160640075489267900.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/kukfjo597om/' target='_blank'>泗阳县华海水处理有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 33.731657, lng: 118.731992 }
+                },
+                {
+                    MingCheng: "合肥市小仓房污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/twu1oqhbnzw/' target='_blank'><img src='upload/2020-11/160639767248548700.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/twu1oqhbnzw/' target='_blank'>合肥市小仓房污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.800442, lng: 117.383001 }
+                },
+                {
+                    MingCheng: "砚山县污水处理厂",
+                    content: "<a href='https://www.expoon.com/e/svka7pg8w9j/panorama' target='_blank'><img src='upload/2020-11/160639736000932300.png' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/svka7pg8w9j/panorama' target='_blank'>砚山县污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 23.622606, lng: 104.361204 }
+                },
+                {
+                    MingCheng: "淮南黑臭水体水质提升工程设计-采购-施工-运维（EPC+O）一体化",
+                    content: "<a href='https://www.expoon.com/e/v2hu5p5ubpc' target='_blank'><img src='upload/2019-11/157423776291264300.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/v2hu5p5ubpc' target='_blank'>淮南黑臭水体水质提升工程设计-采购-施工-运维（EPC+O）一体化</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 32.627725, lng: 116.855027 }
+                },
+                {
+                    MingCheng: "铜陵市黑砂河流域水系治理工程",
+                    content: "<a href='https://www.expoon.com/e/p8ck2e4tb2f' target='_blank'><img src='upload/2019-11/157406234879881200.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/p8ck2e4tb2f' target='_blank'>铜陵市黑砂河流域水系治理工程</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 30.935739, lng: 117.805604 }
+                },
+                {
+                    MingCheng: "郑州双鹤湖水环境治理项目",
+                    content: "<a href='https://www.expoon.com/e/qjbns1s9e3y' target='_blank'><img src='upload/2019-11/157406230671270400.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/qjbns1s9e3y' target='_blank'>郑州双鹤湖水环境治理项目</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 34.405986, lng: 113.851133 }
+                },
+                {
+                    MingCheng: "合肥许小河水质应急工程项目",
+                    content: "<a href='https://www.expoon.com/e/2mjqau8pjri' target='_blank'><img src='upload/2019-11/157406225975042200.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/2mjqau8pjri' target='_blank'>合肥许小河水质应急工程项目</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.768054, lng: 117.338512 }
+                },
+                {
+                    MingCheng: "合肥逍遥津杏花公园水系",
+                    content: "<a href='https://www.expoon.com/e/c692glrqeyk' target='_blank'><img src='upload/2019-11/157406221643030900.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/c692glrqeyk' target='_blank'>合肥逍遥津杏花公园水系</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.873462, lng: 117.303236 }
+                },
+                {
+                    MingCheng: "合肥塘西河水环境综合治理",
+                    content: "<a href='https://www.expoon.com/e/opdoy5b7a9u' target='_blank'><img src='upload/2019-11/157406216555098200.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/opdoy5b7a9u' target='_blank'>合肥塘西河水环境综合治理</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.749601, lng: 117.286638 }
+                },
+                {
+                    MingCheng: "江苏南京浦口区城南河流域净水活水工程水质提升设备采购",
+                    content: "<a href='https://www.expoon.com/e/lwpk3l8gogi' target='_blank'><img src='upload/2019-11/157423841996562000.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/lwpk3l8gogi' target='_blank'>江苏南京浦口区城南河流域净水活水工程水质提升设备采购</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 32.06568, lng: 118.662515 }
+                },
+                {
+                    MingCheng: "江苏南京市鼓楼区惠民河、玄武区紫金山沟等片区水质净化服务",
+                    content: "<a href='https://www.expoon.com/e/m9clf8nfm5e' target='_blank'><img src='upload/2019-11/157423843205897400.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='https://www.expoon.com/e/m9clf8nfm5e' target='_blank'>江苏南京市鼓楼区惠民河、玄武区紫金山沟等片区水质净化服务</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 32.087201, lng: 118.747237 }
+                },
+                {
+                    MingCheng: "国祯环保设备制造事业部",
+                    content: "<a href='http://www.expoon.com/e/rquyk9etz6y/' target='_blank'><img src='upload/2019-11/157406198683344600.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/rquyk9etz6y/' target='_blank'>国祯环保设备制造事业部</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.863738, lng: 117.104807 }
+                },
+                {
+                    MingCheng: "双柏县国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/llc161l1x6s/' target='_blank'><img src='upload/2019-11/157406194697775600.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/llc161l1x6s/' target='_blank'>双柏县国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 24.682234, lng: 101.62722 }
+                },
+                {
+                    MingCheng: "遵化国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/sbku4ml7a3v/' target='_blank'><img src='upload/2019-11/157406190053216500.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/sbku4ml7a3v/' target='_blank'>遵化国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 40.177181, lng: 117.943074 }
+                },
+                {
+                    MingCheng: "长临河镇污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/2svo9uul64f/' target='_blank'><img src='upload/2019-11/157406185268122300.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/2svo9uul64f/' target='_blank'>长临河镇污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.696733, lng: 117.468862 }
+                },
+                {
+                    MingCheng: "即墨市污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/17hwlu7lhdn/' target='_blank'><img src='upload/2019-11/157406180731468100.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/17hwlu7lhdn/' target='_blank'>即墨市污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 36.364413, lng: 120.43571 }
+                },
+                {
+                    MingCheng: "芜湖市朱家桥污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/q2c2ceziu6o/' target='_blank'><img src='upload/2019-11/157406175701029100.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/q2c2ceziu6o/' target='_blank'>芜湖市朱家桥污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.402952, lng: 118.369471 }
+                },
+                {
+                    MingCheng: "徐州国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/zoiruncdy0d/' target='_blank'><img src='upload/2019-11/157406168720696200.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/zoiruncdy0d/' target='_blank'>徐州国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 34.216572, lng: 117.224756 }
+                },
+                {
+                    MingCheng: "宁海国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/7c0wkapdhrr/' target='_blank'><img src='upload/2019-11/157406163903696900.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/7c0wkapdhrr/' target='_blank'>宁海国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 29.377838, lng: 121.494869 }
+                },
+                {
+                    MingCheng: "阳春市水质净化厂",
+                    content: "<a href='http://www.expoon.com/e/d32dhope0n3/' target='_blank'><img src='upload/2019-11/157406149394449400.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/d32dhope0n3/' target='_blank'>阳春市水质净化厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 22.171981, lng: 111.777204 }
+                },
+                {
+                    MingCheng: "芜湖麦王（华谊化工）污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/at9wvqjijn3/' target='_blank'><img src='upload/2019-11/157406024190846200.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/at9wvqjijn3/' target='_blank'>芜湖麦王（华谊化工）污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.371733, lng: 118.338007 }
+                },
+                {
+                    MingCheng: "长沙国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/c8c8v48hk43/' target='_blank'><img src='upload/2019-12/157594319702374300.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/c8c8v48hk43/' target='_blank'>长沙国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 28.21058671, lng: 113.0162858 }
+                },
+                {
+                    MingCheng: "永泰县国祯水处理厂",
+                    content: "<a href='http://www.expoon.com/e/26koxcyfy24/' target='_blank'><img src='upload/2019-11/157405979249051100.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/26koxcyfy24/' target='_blank'>永泰县国祯水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 25.888325, lng: 119.172248 }
+                },
+                {
+                    MingCheng: "彬州国祯水处理厂",
+                    content: "<a href='http://www.expoon.com/e/s21sdmw8hr6/' target='_blank'><img src='upload/2019-11/157405971658649000.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/s21sdmw8hr6/' target='_blank'>彬州国祯水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 35.0259, lng: 108.125665 }
+                },
+                {
+                    MingCheng: "亳州国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/yslul1e6irj/' target='_blank'><img src='upload/2019-11/157405965004092600.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/yslul1e6irj/' target='_blank'>亳州国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 33.845263, lng: 115.818555 }
+                },
+                {
+                    MingCheng: "安徽合肥清溪净水厂",
+                    content: "<a href='http://www.expoon.com/e/xptryvulkzv/' target='_blank'><img src='upload/2019-11/157405930913583500.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/xptryvulkzv/' target='_blank'>安徽合肥清溪净水厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.881406, lng: 117.234734 }
+                },
+                {
+                    MingCheng: "随州国祯污水处理厂",
+                    content: "<a href='http://www.expoon.com/e/coekjkg1kdm/' target='_blank'><img src='upload/2019-11/157405925210892500.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/coekjkg1kdm/' target='_blank'>随州国祯污水处理厂</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.780378, lng: 113.360729 }
+                },
+                {
+                    MingCheng: "安徽国祯膜科技有限公司",
+                    content: "<a href='http://www.expoon.com/e/x3goplpp6p7/' target='_blank'><img src='upload/2019-11/157429501681582500.jpg' width='280' height='130'></a>",
+                    title: "<a class='islabel' href='http://www.expoon.com/e/x3goplpp6p7/' target='_blank'>安徽国祯膜科技有限公司</a>",
+                    imageOffset: { width: -23, height: -21 },
+                    position: { lat: 31.856133, lng: 117.217435 }
+                },
+            ];
+            for (var index = 0; index < markers.length; index++) {
+                var point = new BMap.Point(markers[index].position.lng, markers[index].position.lat);
+                var marker = new BMap.Marker(point, {
+                    icon: new BMap.Icon("http://api.map.baidu.com/lbsapi/createmap/images/icon.png", new BMap.Size(20, 25), {
+                        imageOffset: new BMap.Size(markers[index].imageOffset.width, markers[index].imageOffset.height)
+                    })
+                });
+                var label = new BMap.Label(markers[index].title, { offset: new BMap.Size(25, 5) });
+                var opts = {
+                    width: 200,
+                    title: markers[index].title,
+                    enableMessage: false
+                };
+                var infoWindow = new BMap.InfoWindow(markers[index].content, opts);
+                marker.setLabel(label);
+                marker.setTitle(markers[index].MingCheng);
+
+                addClickHandler(marker, markers[index], infoWindow);
+                map.addOverlay(marker);
+            };
+        }
+        //向地图添加控件
+        function addMapControl() {
+
+            //添加城市查询 start
+            var size = new BMap.Size(10, 20);
+            map.addControl(new BMap.CityListControl({
+                anchor: BMAP_ANCHOR_TOP_LEFT,
+                offset: size,
+            }));
+            //添加城市查询 end
+
+            //比例尺 start
+            var scaleControl = new BMap.ScaleControl({ anchor: BMAP_ANCHOR_BOTTOM_LEFT });
+            scaleControl.setUnit(BMAP_UNIT_IMPERIAL);
+            map.addControl(scaleControl);
+            //比例尺 end
+
+            //比例尺控件 start
+            //var navControl = new BMap.NavigationControl({ anchor: BMAP_ANCHOR_TOP_LEFT, type: BMAP_NAVIGATION_CONTROL_LARGE });
+            //map.addControl(navControl);
+            //比例尺控件 end
+
+            //小地图 start
+            var overviewControl = new BMap.OverviewMapControl({ anchor: BMAP_ANCHOR_BOTTOM_RIGHT, isOpen: true });
+            map.addControl(overviewControl);
+            //小地图 end
+        }
+        var map;
+        initMap();
+    </script>
+</body>
+
+</html>

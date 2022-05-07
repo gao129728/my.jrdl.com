@@ -1,0 +1,12 @@
+<div class="swiper-container">
+    <div class="swiper-wrapper">
+        {volist name="sub_menu" id="vo"}
+        <div class="swiper-slide">
+            <a href="{$vo.url}" {if $vo.isCurrent eq 1}class="at_on on" {/if}>{$vo.name}</a>
+        </div>
+        {/volist}
+    </div>
+</div>
+<!-- 如果需要导航按钮 -->
+<div class="swiper-button-prev"><i class="newiconfont">&#xe6d5;</i></div>
+<div class="swiper-button-next"><i class="newiconfont">&#xe65c;</i></div>

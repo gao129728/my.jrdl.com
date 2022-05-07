@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+{include file='public/head' /}
+<script src="__JS__/jquery.form.js"></script>
+<body>
+{include file='public/header' /}
+
+<div class="w1200 infos User">
+	<div class="clearfix" style="margin-top: 30px;">
+		<div class="user_left">
+			<h3>找回密码</h3>
+			<form action="{:url('home/mail/email')}" method="post" id="zhmm">
+			<div class="ico_bar">
+				<input type="text" name="email" id="" value="" placeholder="请输入注册邮箱"/>
+				<img src="__IMG__/user3.png" class="ico"/>
+			</div>
+			<input type="submit" name="" id="" value="找回密码" class="z_submit"/>
+			</form>
+		</div>
+		<div class="user_right" style="margin-top: 25px;">
+			已有账号？<a href="{:url('home/member/login')}">立即登录</a>
+		</div>
+	</div>
+</div>
+<script>
+    $(function(){
+        $('#zhmm').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+        function checkForm() {
+            $('.z_submit').attr("disabled", "disabled");
+        }
+        function complete(data){
+            if(data.code == 1){
+                layer.msg(data.msg, {icon: 6,time:2000,shade: 0.5}, function(index){
+                    layer.close(index);
+                    window.location.href="{:url('home/member/login')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:2000,shade: 0.5}, function(index){
+                    $('.z_submit').removeAttr("disabled");
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+    });
+</script>
+{include file='public/footer' /}
+</body>
+</html>

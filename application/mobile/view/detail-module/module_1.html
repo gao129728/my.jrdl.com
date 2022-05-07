@@ -1,0 +1,82 @@
+<div class="product-show clearfix">
+    {if $product_img}
+    <div class="focusBox">
+        <div class="bigImg" style="width:{$infoParam[0]}px; height:{$infoParam[1]}px;">
+            <ul>
+                {volist name="product_img" id="vo"}
+                    {if $infoParam[2] eq 1}
+                    <li><a href="__UPLOAD_PATH__/{$vo.photo}" class="MagicZoom"><img src="__UPLOAD_PATH__/{$vo.photo}" width="{$infoParam[0]}" height="{$infoParam[1]}" alt="{$vo.title}" /></a></li>
+                    {else/}
+                    <li><img src="__UPLOAD_PATH__/{$vo.photo}" width="{$infoParam[0]}" height="{$infoParam[1]}" alt="{$vo.title}" /></li>
+                    {/if}
+                {/volist}
+            </ul>
+        </div>
+        <div class="smallImg" style="width:{$infoParam[0]+2}px;">
+            <a class="scrollbutton prev"><i class="iconfont icon-xiangzuojiantou"></i></a>
+            <div class="p_list">
+                <ul>
+                    {volist name="product_img" id="vo"}
+                    <li><img src="__UPLOAD_PATH__/{$vo.photo}" width="80"/></li>
+                    {/volist}
+                </ul>
+            </div>
+            <a class="scrollbutton next"><i class="iconfont icon-xiangyoujiantou"></i></a>
+        </div>
+        {if $infoParam[2] eq 1}
+        <link href="__CSS__/MagicZoom.css" rel="stylesheet" type="text/css" />
+        <script type="text/javascript" src="__JS__/mz-packed.js"></script>
+        {/if}
+        <script type="text/javascript">
+            var w=98;//小图宽度，包括内外边距、边框
+            var s=$('.smallImg .p_list li').size();
+            var length= Math.floor({$infoParam[0]-66}/w); //小图显示个数
+            $('.smallImg .p_list').width(length*w);
+            $('.smallImg ul').width(s*w);
+            //大图滚动
+            jQuery(".focusBox").slide({titCell: ".p_list li", mainCell: ".bigImg ul", effect:"fold", autoPlay:false,trigger:'click', startFun: function(i,c){
+                if (c>length){
+                    if(i>=length){
+                        $('.smallImg ul').animate({'marginLeft': -(i-length+1)*w}, 100);
+                    }else{
+                        $('.smallImg ul').animate({'marginLeft': 0}, 100);
+                    }
+                }
+            }
+            });
+        </script>
+    </div>
+    {/if}
+    <div class="intro">
+        <h2>{$article.title}</h2>
+        <div class="i">
+            {$article.intro}
+        </div>
+        {if $config.web_site_qq neq ''}
+        <div class="online_qq"><a href="http://wpa.qq.com/msgrd?v=3&uin={$config.web_site_qq}&site=qq&menu=yes" target="_blank"><img src="__IMG__/qq_icon.png"/>在线咨询</a></div>
+        {/if}
+    </div>
+    <script type="text/javascript">
+        var box_wd = $('.product-show').width();
+        $('.product-show .intro').width(box_wd - 22 - {$infoParam[0]});
+    </script>
+</div>
+<div class="Pro_info">
+    <h3>产品介绍</h3>
+    <div class="article_content">
+        {$article.content}
+    </div>
+</div>
+{if $relevant_article}
+<div class="Pro_info">
+    <h3>相关产品</h3>
+    <ul class="product_about clearfix">
+        {volist name="relevant_article" id="itemPic"}
+        <li {if $i eq 1}class="noMg"{/if}>
+            <p class="pic"><a href="{$itemPic.url}" title="{$itemPic.title}" class="mask"><i class="iconfont icon-jiantouyou"></i></a><img src="__UPLOAD_PATH__/{$itemPic.photo}" alt="{$itemPic.title}"></p>
+            <p class="tit"><a href="{$itemPic.url}" title="{$itemPic.title}">{$itemPic.title}</a></p>
+        </li>
+        {/volist}
+    </ul>
+</div>
+{/if}

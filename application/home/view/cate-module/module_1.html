@@ -1,0 +1,26 @@
+<div class="container nopd">
+    <!--二级目录-->
+    {include file="public/sub_menu" /}
+
+    {if $subCur eq 12}
+    <!--关于我们-->
+    <div class="about-1 g-in clearfix">
+        <div class="a-1-z">
+            {$lists.content}
+        </div>
+        <div class="a-1-y"><img src="__UPLOAD_PATH__/{$lists.photo}"/></div>
+    </div>
+    {elseif $subCur eq 15||35||36}
+    <div class="qua g-in clearfix">
+        {$lists.content}
+    </div>
+    {else}
+    <div class="honor g-in clearfix">
+        <div class="p"><img src="__UPLOAD_PATH__/{$lists.photo}" alt="{$lists.title}" /></div>
+        <div class="t">
+            {$lists.content}
+        </div>
+    </div>
+</div>
+    {/if}
+</div>

@@ -1,0 +1,82 @@
+<!--about-->
+<div class="container">
+    <!--二级目录-->
+    {include file="public/sub_menu" /}
+
+    {if $subCur eq 13}
+    <div class="pict">
+        <ul class="g-in clearfix">
+            {volist name="lists" id="vo"}
+            <li>
+                <div class="p">
+                    <a href="{:getDetailUrl($vo.id,$vo.website)}" target='_blank'>
+                        <img src="__UPLOAD_PATH__/{$vo.photo}" alt="{$vo.title}"/>
+                    </a>
+                </div>
+                <div class="t">
+                    <em><a href="{:getDetailUrl($vo.id,$vo.website)}" target='_blank'></a></em>
+                    <h2><a href="{:getDetailUrl($vo.id,$vo.website)}" target='_blank'>{$vo.title}</a></h2>
+                    <div class="i">
+                        {$vo.content|leftstr_html=55}
+                    </div>
+                </div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    {elseif $subCur eq 30}
+    <div class="article-con g-in">
+        <div class="culture clearfix" align="center">
+            {volist name="lists" id="vo"}
+            <img src="__UPLOAD_PATH__/{$vo.photo}" alt="{$vo.title}"/>
+            {/volist}
+        </div>
+    </div>
+    {elseif ($subCur eq 31)||($subCur eq 32)||($subCur eq 33)||($subCur eq 34)}
+    <div class="{if $subCur eq 33}piList-2{else}piList{/if} g-in">
+        <div class="pic-item-list clearfix">
+            {volist name="lists" id="vo"}
+            <div class="pic-item">
+                <div class="list-pic">
+                    <a href="{:getDetailUrl($vo.id,$vo.website)}">
+                        <img src="__UPLOAD_PATH__/{$vo.photo}" alt="{$vo.title}"/>
+                    </a>
+                </div>
+                <dl>
+                    <dt><a href="{:getDetailUrl($vo.id,$vo.website)}">{$vo.title}</a></dt>
+                </dl>
+            </div>
+            {/volist}
+        </div>
+    </div>
+    {else}
+    <div class="pothoItem g-in clearfix">
+        <dl>
+            <dt>
+                <h2>{$cate.name}</h2>
+                <h3>{$cate.en_name}</h3>
+                <div class="i">
+                    {$cate.cate_des}
+                </div>
+            </dt>
+            {volist name="lists" id="vos"}
+            <dd class="clearfix">
+                <div class="p">
+                    <a href="{:getDetailUrl($vos.id,$vos.website)}" target="_blank">
+                        <img src="__UPLOAD_PATH__/{$vos.photo}" alt="{$vos.title}"/>
+                    </a>
+                </div>
+                <div class="t">
+                    <h3><a href="display.php?id=13" target="_blank">{$vos.title}</a></h3>
+                    <div class="ii">
+                        {$vos.intro}
+                    </div>
+                </div>
+            </dd>
+            {/volist}
+        </dl>
+    </div>
+    {/if}
+</div>
+
+

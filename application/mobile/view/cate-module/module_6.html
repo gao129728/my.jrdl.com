@@ -1,0 +1,65 @@
+
+
+<div class="online_message">
+    <div class="form-box">
+        <form action="/home/form/message.html" method="post" id="message">
+            <div class="form">
+                <h1>友情提示：请提示真实信息，以便我们与您取得联系。（加<i>*</i>为必填选项</i>)</h1>
+                <div class="line fsc">
+                    <div class="title"><i>*</i>姓名</div>
+                    <input type="text" name="name">
+                </div>
+                <div class="line fsc">
+                    <div class="title"><i>*</i>电话</div>
+                    <input type="text" name="phone">
+                </div>
+                <div class="line fsc">
+                    <div class="title"><i>*</i>邮箱</div>
+                    <input type="text" name="email">
+                </div>
+                <div class="line fsc">
+                    <div class="title"><i>*</i>建议</div>
+                    <textarea name="content" id="" cols="30" rows="10"></textarea>
+                </div>
+                <div class="line fsc">
+                    <div class="title"></div>
+                    <input type="submit" class="btn" value="提交">
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+
+<script type="text/javascript">
+    $('#message')[0].reset();
+    $(function(){
+        $('#message').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm(){
+
+
+        }
+
+        function complete(data){
+            if(data.code == 1){
+                layer.msg(data.msg, {time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                    window.location.reload();
+                });
+            }else{
+                layer.msg(data.msg, {time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+    });
+
+
+</script>

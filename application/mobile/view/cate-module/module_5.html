@@ -1,0 +1,130 @@
+
+{if $lists}
+<div class="join-us">
+        {volist name='lists' id='vo'}
+    <div class="post-item">
+        <div class="post-cont">
+            <div class="left-box fsc">
+                <div>岗位：{$vo.title}</div>
+                <div class="place "> 工作地点：{$vo.address} </div>
+            </div>
+            <div class="right-box fsc">
+                <div class="num">招聘人数：{$vo.nums}人</div>
+                <div class="click-btn">
+                    查看职位描述<span class="iconfont icon-xiangxiasanjiaoxing"></span>
+                </div>
+            </div>
+        </div>
+        <div class="post-summary">
+            {$vo.content}
+            <div class="post-apply" data-id="{$vo.id}"> 在线申请 </div>
+        </div>
+    </div>
+        {/volist}
+
+    <div class="page-box">
+        {$lists->render()}
+    </div>
+</div>
+
+{/if}
+<!-- 在线申请 弹出框 -->
+<div id="dialogBg"></div>
+<div id="dialog1" class="animated">
+    <div class="dialogTop">
+        在线申请
+        <div class="close"><img src="__IMG__/dialogClose.png" alt=""></div>
+    </div>
+
+        <ul class="editInfos">
+            <form action="{:url('home/form/job')}" id="job_apply" method="post">
+                <li>
+                    <label for="name" class="title">姓名：</label><input type="text" name="name" value="" class="ipt"
+                                                                      id="name" placeholder="请输入姓名" />
+                </li>
+                <li>
+                    <span class="title">性别：</span>
+                    <label for="radio1" style="display: flex;align-items: center;">
+                        <input type="radio" checked name="sex" value="男" class="radio" id="radio1"><span
+                            style="padding: 0 10px;">男</span>
+                    </label>
+                    <label for="radio2" style="display: flex;align-items: center;">
+                        <input type="radio" name="sex" value="女" class="radio" id="radio2"><span
+                            style="padding: 0 10px;">女</span>
+                    </label>
+                </li>
+                <li>
+                    <label for="birthday" class="title">出生日期：</label> <input type="text" class="layui-input ipt"
+                                                                             name="birthday" id="birthday" placeholder="请选择出生日期">
+                </li>
+                <li>
+                    <label for="college" class="title">毕业院校：</label><input type="text" name="college" value=""
+                                                                          class="ipt" id="college" placeholder="请输入毕业院校" />
+                </li>
+                <li>
+                    <label for="phone" class="title">联系方式：</label><input type="text" name="phone" value=""
+                                                                         class="ipt" id="phone" placeholder="请输入联系方式" />
+                </li>
+                <li>
+                    <label for="experience" class="title">工作经历：</label><textarea name="resumes" id="experience" cols="20"
+                                                                                 rows="10" placeholder="请输入工作经历" ></textarea>
+                </li>
+                <li><input type="submit" value="立即提交" class="submitBtn" /></li>
+                <input type="hidden" name="cateId" id="cateId">
+            </form>
+        </ul>
+</div>
+<script type="text/javascript">
+    $('#job_apply')[0].reset();
+    $(function(){
+        $('#job_apply').ajaxForm({
+            beforeSubmit: checkForm, // 此方法主要是提交前执行的方法，根据需要设置
+            success: complete, // 这是提交后的方法
+            dataType: 'json'
+        });
+
+        function checkForm(){
+            if( '' == $.trim($('#name').val())){
+                layer.msg('姓名不能为空', {time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+            if( '' == $.trim($('#phone').val())){
+                layer.msg('联系电话不能为空', {time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+
+        }
+
+        function complete(data){
+            if(data.code == 1){
+                layer.msg(data.msg, {time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                    window.location.reload();
+                });
+            }else{
+                layer.msg(data.msg, {time:1500,shade: 0.1}, function(index){
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+
+    });
+
+
+</script>
+
+<script src="__JS__/layui/layui.js" charset="utf-8"></script>
+<script> // 人才招聘弹窗 时间选择器
+layui.use('laydate', function () {
+    var laydate = layui.laydate;
+    //常规用法
+    laydate.render({
+        elem: '#birthday'
+    });
+});
+</script>

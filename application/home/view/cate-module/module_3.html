@@ -1,0 +1,65 @@
+<!--新闻 & 党群活动-->
+<!--页面右侧新闻按照后台优先置顶排列 右侧按照序号倒序排列-->
+<div class="container">
+    <div class="list g-in clearfix">
+        <div class="list-z">
+            <div class="hotnews clearfix">
+                {volist name="lists" id="vos" length='1'}
+                <div class="p">
+                    <a href="{:getDetailUrl($vos.id,$vos.website)}" target='_blank'>
+                    <img src="__UPLOAD_PATH__/{$vos.photo}" alt="{$vos.title}" />
+                    </a>
+                </div>
+                <div class="t">
+                    <h2><a href="d{:getDetailUrl($vos.id,$vos.website)}" target='_blank'>{$vos.title}</a></h2>
+                    <div class="i">
+                        {$vos.content|leftstr_html=110}
+                    </div>
+                    <p>发布时间：{$vos.create_time|date="Y-m-d",###}</p>
+                </div>
+                {/volist}
+            </div>
+            <ul class="clearfix">
+                {volist name="lists" id="vos" offset='1'}
+                <li>
+                    <div class="p">
+                        <a href="{:getDetailUrl($vos.id,$vos.website)}" target='_blank'>
+                            <img class="lazy" src="__IMG__/grey.gif" data-original="__UPLOAD_PATH__/{$vos.photo}" alt="{$vos.title}" /></a></div>
+                    <h2><a href="{:getDetailUrl($vos.id,$vos.website)}" target='_blank'>{$vos.title}</a></h2>
+                    <div class="i">
+                        {$vos.content|leftstr_html=41}
+                    </div>
+                    <p>发布时间：{$vos.create_time|date="Y-m-d",###}</p>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+        <script>
+            $("img.lazy").lazyload({
+                threshold : -100,
+                effect : "fadeIn",
+                effectspeed : 800
+            });
+        </script>
+        <div class="list-y">
+            <h2>最热动态</h2>
+            <ul>
+                {if $subCur eq 39}
+                {volist name="hot_news" id="hn" key='k'}
+                <li class="clearfix">
+                    <em>{$k}</em>
+                    <a href="{:getDetailUrl($hn.id,$hn.website)}" target='_blank'>{$hn.title}</a>
+                </li>
+                {/volist}
+                {else}
+                {volist name="dqhd_news" id="hn" key='k'}
+                <li class="clearfix">
+                    <em>{$k}</em>
+                    <a href="{:getDetailUrl($hn.id,$hn.website)}" target='_blank'>{$hn.title}</a>
+                </li>
+                {/volist}
+                {/if}
+            </ul>
+        </div>
+    </div>
+</div>

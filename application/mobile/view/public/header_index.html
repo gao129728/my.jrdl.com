@@ -1,0 +1,58 @@
+<div class="header clearfix">
+    <div class="logo">
+        <a href="/">
+            <img src="__UPLOAD_PATH__/{$config.web_site_logo}" alt="">
+        </a>
+    </div>
+    <div class="nav">
+        <ul class="clearfix">
+            <li {if $navCur eq 'index'}class="active"{/if}><a href="/">首页</a></li>
+            {volist name="nav_cate" id="nav"}
+            <li {if $navCur eq $nav.id}class="active"{/if}><a href="{$nav.url}">{$nav.name}</a>
+            <div class="nav-item">
+                <dl>
+                    {volist name='nav.sub' id='vo'}
+                    <dd><a href="{$vo.url}"><span>{$vo.name}</span></a></dd>
+                    {/volist}
+                </dl>
+            </div>
+            </li>
+            {/volist}
+        </ul>
+    </div>
+    <div class="tel">
+        <p>TEL：{$config.web_serviceLine}</p>
+    </div>
+    <div class="search-box">
+        <i class="iconfont icon-sousuo"></i>
+        <div class="searInfo">
+            <input type="text" id="keys" class="txt" placeholder="请输入关键字">
+            <a href="javascript:;" id="sjk" class="iconfont icon-sousuo"></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#sjk').click(function(){
+
+        var keys=$('#keys').val();
+        var pattern =  /select|insert|update|CR|document|LF|eval|delete|script|alert|union|into|load_file|outfile/i;
+        if(keys==''){
+            layer.msg('请输入关键字', {icon: 5,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+            });
+            return false;
+        }
+        if(pattern.test(keys)){
+            layer.msg('非法字符', {icon: 5,time:1500,shade: 0.1}, function(index){
+                layer.close(index);
+            });
+            $("#keys").attr("value","");
+            $("#keys").focus();
+            return false;
+        }
+
+        location.href='{:url("home/search/index")}?keyword='+keys;
+    });
+</script>
+

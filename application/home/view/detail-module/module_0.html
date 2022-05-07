@@ -1,0 +1,85 @@
+<!--科研详情-->
+<body class="ins_body thr_body">
+{include file="public/header" /}
+{include file="public/banner" /}
+<div class="uix-ajax-load__loader"><span></span></div>
+<div id="ind_con_box" class="ind_con_box ">
+    <div class="uix-ajax-load__fullpage-container">
+        <section class="uix-height--100 is-mobile-still">
+            <div class="ajax-container" data-ajax-method="POST" data-ajax-page-id="1">
+                <div class="js-uix-ajax-load__container">
+                    <div class="uix-ajax-load__container">
+                        <div class="pub_pad_left pure">
+                        </div>
+                        {$info.content}
+
+                        <div class="pub_pad_left pub_pad_right pure fou_con_box pad_top0">
+                            <div class="thr_tab_box">
+                                <div class="thr_tab_nav_box thr_tab_nav_box_4 pure scroll-animate father"
+                                     data-child=".at_on" data-delay=".05" data-effect="fadeInUpSmall">
+                                    {volist name="gaastitle" id="gaas"}
+                                    <a {if $i eq 1}class="on at_on"{else/}class=" at_on"{/if}><span>{$gaas.title}</span></a>
+                                    {/volist}
+                                    <span class="tab_nav_line"></span>
+                                </div>
+                                <div class="thr_tab_case">
+                                    {volist name="gasscontent" id="gac"}
+                                    <div class="thr_tab_con">
+                                        <div class="thr_title_l_box">
+                                            <img src="__UPLOAD_PATH__/{$gaas.photo}" alt="">
+                                            <span class="thr_title_l thr_name"><span class="scroll-animate" data-effect="fadeInUpSmall">Introduction</span></span>
+                                        </div>
+                                        <div class="fon_num_tex_box scroll-animate father pure" data-child=".at_on"
+                                             data-delay=".05" data-effect="fadeInUpSmall">
+                                            <span class="fon_num at_on">0{$i}</span>
+                                            <div class="fon_tex fou_info_font_sty font_regular at_on">
+                                                {$gac.content}
+                                            </div>
+                                        </div>
+                                    </div>
+                                    {/volist}
+                                </div>
+                            </div>
+                        </div>
+
+                        {include file="public/footer" /}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+</div>
+<!--视频弹窗-->
+<div class="video_sha sha_bg">
+    <div class="sha_btn_close"><i class="newiconfont">&#xe635;</i></div>
+    <div class="sha_vid">
+        <video class="scroll-animate" data-delay=".5" data-effect="flipInX_slow" controls loop
+               playsinline="" x-webkit-airplay="" webkit-playsinline="" x5-video-player-type="h5"></video>
+    </div>
+</div>
+<!--轮播-->
+<script type="text/javascript" src="__JS__/swiper.min.js"></script>
+<!--监听滚动条-->
+<script type="text/javascript" src="__JS__/jquery.waypoints.min.js"></script>
+<script type="text/javascript" src="__JS__/main.js"></script>
+<!--滚动条-->
+<script type="text/javascript" src="__JS__/jquery.jscrollpane.min.js"></script>
+<script type="text/javascript" src='__JS__/classie.js'></script>
+<script type="text/javascript" src="__JS__/jquery.mousewheel.js"></script>
+<script type="text/javascript" src='__JS__/classie.js'></script>
+<!--<script type="text/javascript" src='__JS__/jquery.parallax.js'></script>-->
+<script type="text/javascript" src='__JS__/app.js'></script>
+<script type="text/javascript" src='__JS__/smooth.js'></script>
+
+
+<script src="__JS__/jquery.lettering.js"></script>
+
+
+<script src="__JS__/jquery.textillate.js"></script>
+<script src="__JS__/run.js"></script>
+<script src="__JS__/TweenMax.js"></script>
+<script src="__JS__/mo.min.js"></script>
+
+<script src="__JS__/public.js"></script>
+<!--<script src="__JS__/ajax-page-loader.js"></script>-->
+</body>

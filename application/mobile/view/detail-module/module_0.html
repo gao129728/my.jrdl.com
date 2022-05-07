@@ -1,0 +1,20 @@
+<div class="art-box">
+    <h2>{$article.title}</h2>
+    <div class="info">
+        <i class="iconfont icon-shijian"></i>发布时间：{$article.create_time|date="Y-m-d",###}
+        <i class="iconfont icon-liulan"></i>浏览次数：{$article.views}
+        {if $article.source neq ''}<i class="iconfont icon-danyilaiyuan"></i>信息来源：{$article.source}{/if}
+        {if $article.writer neq ''}<i class="iconfont icon-xiazai43"></i>文章作者：{$article.writer}{/if}
+    </div>
+</div>
+<div class="article_content">
+    {$article.content}
+</div>
+<ul class="prev_next">
+    <li>
+        <span>上一篇：</span>{if $up}<a href="{$up.url}" title="{$up.title}" {if $up.website neq ''}target="_blank"{/if}>{$up.title}</a>{else/}没有了{/if}
+    </li>
+    <li>
+        <span>下一篇：</span>{if $down}<a href="{$down.url}" title="{$down.title}" {if $down.website neq ''}target="_blank"{/if}>{$down.title}</a>{else/}没有了{/if}
+    </li>
+</ul>

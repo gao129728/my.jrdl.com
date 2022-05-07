@@ -1,0 +1,27 @@
+{if $lists}
+<div class="news-list">
+    <ul>
+        {volist name='lists' id='vo'}
+        <li>
+            <a class="tit" href="{$vo.url}">{$vo.title}</a>
+            <div class="cont">
+                {$vo.content|leftstr_html=40}
+            </div>
+            <div class=" time-box">
+                <div class="time">发布时间：{$vo.create_time|date='Y-m-d H:i',###}</div>
+                <div class="bshare-custom fcc">
+                    <img src="__IMG__/share.png" alt=""> 分享到：
+                    <a title="分享到微信" class="bshare-weixin"> 微信</a>
+                    <a title="分享到新浪微博" class="bshare-sinaminiblog">新浪微博</a>
+                    <a title="分享到QQ空间" class="bshare-qzone">QQ空间</a>
+                </div>
+            </div>
+        </li>
+        {/volist}
+    </ul>
+    <div class="page-box">
+        {$lists->render()}
+    </div>
+
+</div>
+{/if}

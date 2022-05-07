@@ -1,0 +1,50 @@
+
+<div class="mobile-header">
+    <header class="clearfix">
+        <div class="logo fl">
+            <a href="/mobile" title="景秀律师事务所">
+                <img src="__UPLOAD_PATH__/{$config.web_site_waplogo}" alt="">
+            </a>
+        </div>
+        <div class="right fr">
+            <div class="lines fr">
+                <p></p>
+                <p></p>
+                <p></p>
+            </div>
+            <!-- <div class="serch fr"></div>
+            <div class="english">EN</div> -->
+        </div>
+        <div class="nav">
+            <ul>
+                <li><a href="/mobile" class="tit">首页</a></li>
+                {volist name="nav_cate" id="nav"}
+                <li>
+                    <a href="javascript:;" class="tit">{$nav.name}</a>
+                    <div class="box">
+                        {volist name='nav.sub' id='vo'}
+                        <a href="{$vo.url}" class="tt">{$vo.name}</a>
+                        {/volist}
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+
+        </div>
+    </header>
+    <div class="headerbg"></div>
+    <div class="hserch">
+        <a href="" class="img" title="祥生集团">
+            <img src="./static/images/logo.png" alt="">
+        </a>
+        <i>close</i>
+        <form action="search.html" method="get">
+            <div class="box f-cb">
+                <input type="text" name="search" placeholder="Search..." class="inp inptet">
+                <input type="submit" value=" " class="sub">
+            </div>
+        </form>
+    </div>
+    <div class="bgheader"></div>
+</div>
+

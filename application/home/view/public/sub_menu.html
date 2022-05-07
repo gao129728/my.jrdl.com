@@ -1,0 +1,7 @@
+<div class="menu">
+    <dl class="clearfix">
+        {volist name='sub_menu' id='vo'}
+        <dt><a href="{$vo.url}" {if $subCur eq $vo.id}class="current"{/if}>{$vo.name}</a></dt>
+        {/volist}
+    </dl>
+</div>

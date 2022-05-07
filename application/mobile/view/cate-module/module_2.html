@@ -1,0 +1,19 @@
+
+
+{if $lists}
+<div class="lawyer-team">
+    <ul class="team-box fsc">
+        {volist name='lists' id='vo'}
+        <li>
+            <a href="{$vo.url}" class="item">
+                <div class="img-box"><img src="__UPLOAD_PATH__/{$vo.photo}" class="PcBan" /></div>
+                <div class="name">{$vo.title}</div>
+            </a>
+        </li>
+        {/volist}
+    </ul>
+    <div class="page-box">
+    {$lists->render()}
+    </div>
+</div>
+{/if}

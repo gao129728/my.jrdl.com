@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="c6a33238-11d9-4913-88ef-66a4aa266663" name="更改" comment="static">
+      <change beforePath="$PROJECT_DIR$/public/static/.gitignore" beforeDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="ChangesViewManager" show_ignored="true">
+    <option name="groupingKeys">
+      <option value="directory" />
+    </option>
+  </component>
+  <component name="ComposerSettings" doNotAsk="true" synchronizationState="SYNCHRONIZE">
+    <pharConfigPath>$PROJECT_DIR$/composer.json</pharConfigPath>
+    <execution />
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
+  </component>
+  <component name="PhpWorkspaceProjectConfiguration">
+    <include_path>
+      <path value="$PROJECT_DIR$/vendor/jaeger/phpquery-single" />
+      <path value="$PROJECT_DIR$/vendor/jaeger/querylist" />
+      <path value="$PROJECT_DIR$/vendor/composer" />
+    </include_path>
+  </component>
+  <component name="ProjectId" id="215NyU3dDt7GalQoqLGwwucG52B" />
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent">
+    <property name="DatabaseDriversLRU" value="mysql" />
+    <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
+    <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
+    <property name="WebServerToolWindowFactoryState" value="false" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="project.propVCSSupport.Mappings" />
+    <property name="vue.rearranger.settings.migration" value="true" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="E:\php_project\my.jrdl.com\application\home\view\cate-module" />
+      <recent name="E:\php_project\my.jrdl.com\public\static\home\images" />
+      <recent name="E:\php_project\my.anjs.com\public\static\home\js" />
+      <recent name="E:\php_project\my.anjs.com\application\home\view\public" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="E:\php_project\my.jrdl.com\public\static\home\css" />
+    </key>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="应用程序级" UseSingleDictionary="true" transferred="true" />
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="默认任务">
+      <changelist id="c6a33238-11d9-4913-88ef-66a4aa266663" name="更改" comment="" />
+      <created>1637227243221</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1637227243221</updated>
+      <workItem from="1637227244416" duration="1963000" />
+      <workItem from="1637281864759" duration="21871000" />
+      <workItem from="1637309016023" duration="1777000" />
+      <workItem from="1637541716312" duration="9733000" />
+      <workItem from="1637626992006" duration="1917000" />
+      <workItem from="1637742431527" duration="1762000" />
+      <workItem from="1638338662871" duration="3658000" />
+      <workItem from="1638406510608" duration="5568000" />
+      <workItem from="1638491550787" duration="3148000" />
+      <workItem from="1638861190170" duration="1604000" />
+      <workItem from="1639464743896" duration="58000" />
+      <workItem from="1639472677782" duration="1648000" />
+      <workItem from="1639528274811" duration="394000" />
+      <workItem from="1639528842380" duration="55000" />
+      <workItem from="1640762013661" duration="603000" />
+      <workItem from="1641948702533" duration="3212000" />
+      <workItem from="1642034882675" duration="42000" />
+      <workItem from="1642037929812" duration="3490000" />
+      <workItem from="1642056639057" duration="869000" />
+      <workItem from="1642142595960" duration="148000" />
+      <workItem from="1645407946587" duration="5883000" />
+      <workItem from="1645585623133" duration="1379000" />
+      <workItem from="1645604046449" duration="39000" />
+      <workItem from="1645673266731" duration="599000" />
+      <workItem from="1646013286216" duration="724000" />
+      <workItem from="1646700944946" duration="4944000" />
+      <workItem from="1646804912145" duration="49000" />
+      <workItem from="1649469472766" duration="1104000" />
+      <workItem from="1650504251559" duration="5425000" />
+      <workItem from="1650510060788" duration="19275000" />
+      <workItem from="1650587097279" duration="23868000" />
+      <workItem from="1650763409474" duration="3750000" />
+      <workItem from="1651885166011" duration="385000" />
+      <workItem from="1651887006369" duration="324000" />
+      <workItem from="1651887589507" duration="361000" />
+      <workItem from="1651887966858" duration="246000" />
+      <workItem from="1651888710925" duration="185000" />
+    </task>
+    <servers />
+  </component>
+  <component name="TypeScriptGeneratedFilesManager">
+    <option name="version" value="3" />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+    <option name="oldMeFiltersMigrated" value="true" />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <ignored-roots>
+      <path value="$PROJECT_DIR$" />
+    </ignored-roots>
+    <MESSAGE value="11" />
+    <MESSAGE value="提交" />
+    <option name="LAST_COMMIT_MESSAGE" value="提交" />
+  </component>
+</project>

@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+{include file='public/head' /}
+<script src="__JS__/jquery.form.js"></script>
+<body>
+{include file='public/header' /}
+
+<div class="w1200 infos User">
+	<div class="clearfix">
+		<div class="user_left">
+			<form action="{:url('home/member/login')}" method="post" id="login">
+			<h3>会员登录</h3>
+			<div class="ico_bar">
+				<input type="text" name="username" id="" value="" placeholder="用户名"/>
+				<img src="__IMG__/user1.png" class="ico"/>
+			</div>
+			<div class="ico_bar">
+				<input type="password" name="password" id="" value="" placeholder="登录密码"/>
+				<img src="__IMG__/user2.png" class="ico"/>
+			</div>
+			<div class="ico_bar ico_bar1">
+				<input type="text" name="code" id="" value="" placeholder="验证码"/>
+				<img src="{:url('form/code_img')}" class="codeImg" onclick="this.src='{:url(\'form/code_img\')}?time='+Math.random();"/>
+			</div>
+			<a href="{:url('home/member/zhmm')}" class="forget">忘记密码？</a>
+			<input type="submit" name="" id="" value="登录" class="z_submit"/>
+			</form>
+		</div>
+		<div class="user_right">
+			还没有账号？<a href="{:url('home/member/register')}">立即注册</a>
+		</div>
+	</div>
+</div>
+<script type="text/javascript">
+    $(function(){
+        $('#login').ajaxForm({
+            beforeSubmit: checkForm,
+            success: complete,
+            dataType: 'json'
+        });
+        function checkForm() {
+            $('.z_submit').attr("disabled", "disabled");
+        }
+        function complete(data){
+            if(data.code == 1){
+                layer.msg(data.msg, {icon: 6,time:2000,shade: 0.5}, function(index){
+                    layer.close(index);
+                    window.location.href="{:url('home/index/index')}";
+                });
+            }else{
+                layer.msg(data.msg, {icon: 5,time:2000,shade: 0.5}, function(index){
+                    $('.z_submit').removeAttr("disabled");
+                    layer.close(index);
+                });
+                return false;
+            }
+        }
+    });
+</script>
+{include file='public/footer' /}
+</body>
+</html>

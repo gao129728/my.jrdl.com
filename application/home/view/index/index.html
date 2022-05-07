@@ -1,0 +1,263 @@
+<!doctype html>
+<html>
+
+{include file="public/head" /}
+
+<body>
+<!--响应式手机导航-->
+
+<div class="wrapper">
+
+    {include file="public/header" /}
+
+    <div class="swiper-container swiper-container-1">
+        <div class="swiper-wrapper">
+            {volist name="banner" id="vo"}
+            <div class="swiper-slide"><a href="{$vo.url? $vo.url:'javascript:;'}">
+                <img src="__UPLOAD_PATH__/{$vo.photo}" alt="{$vo.title}"/></a>
+            </div>
+            {/volist}
+        </div>
+        <div class="swiper-pagination swiper-pagination-1"></div>
+    </div>
+    <script>
+        var swiper1 = new Swiper('.swiper-container-1', {
+            loop: true,
+            autoplay: {
+                delay: 3500,
+                stopOnLastSlide: false,
+                disableOnInteraction: true,
+            },
+            pagination: {
+                el: '.swiper-pagination-1',
+                clickable: true,
+            },
+        });
+    </script>
+    <div class="container">
+        <div class="b-1">
+            <div class="hd">
+                <h2>关于我们</h2>
+                <p>About Us</p>
+            </div>
+            <div class="ii">
+                {$aboutus.intro}
+            </div>
+            <ul class="g-in clearfix">
+                <li>
+                    <h3 class="timer1">{$aboutus.dataone}</h3>
+                    <p>年公司成立</p>
+                </li>
+                <li>
+                    <h3 class="timer2">{$aboutus.datatwo}</h3>
+                    <p>年公司上市</p>
+                </li>
+                <li>
+                    <h3 class="timer3">{$aboutus.datathree}</h3>
+                    <p>余座市政污水厂</p>
+                </li>
+                <li>
+                    <h3 class="timer4">{$aboutus.datafour}</h3>
+                    <p>日处理污水{$aboutus.datafour}万吨</p>
+                </li>
+            </ul>
+            <script type="text/javascript" src="__JS__/jquery.animateNumber.min.js"></script>
+            <script type="text/javascript">
+                var x = false;
+                window.onscroll = function () {
+                    var t = document.documentElement.scrollTop || document.body.scrollTop;
+                    //console.log(t);
+                    if (t >= 600 && x == false) {
+                        x = true;
+                        $('.timer1').stop().animateNumber({number: 1997}, 2000);
+                        $('.timer2').animateNumber({number: 2014}, 2000);
+                        $('.timer3').animateNumber({number: 150}, 2000);
+                        $('.timer4').animateNumber({number: 511}, 2000);
+                    }
+                }
+            </script>
+            <div class="m">
+                <a href="{:getCateUrl(12,'')}" target="_blank">了解更多</a>
+            </div>
+        </div>
+        <div class="b-2">
+            <div class="hd">
+                <h2>最新动态</h2>
+                <p>News</p>
+            </div>
+            <div class="bd clearfix">
+                <div class="swiper-container swiper-container-2">
+                    <div class="swiper-wrapper">
+                        {volist name="news_lists" id="nl" length='5'}
+                        <div class="swiper-slide">
+                            <a href="{:getDetailUrl($nl.id,$nl.website)}" target="_blank">
+                                <img src="__UPLOAD_PATH__/{$nl.photo}" alt="{$nl.title}"/>
+                                <p><span>{$nl.title}</span></p>
+                            </a>
+                        </div>
+                        {/volist}
+                    </div>
+                    <div class="swiper-pagination swiper-pagination-2"></div>
+                </div>
+                <script>
+                    var swiper2 = new Swiper('.swiper-container-2', {
+                        loop: true,
+                        autoplay: true,
+                        effect: 'fade',
+                        pagination: {
+                            el: '.swiper-pagination-2',
+                            clickable: true,
+                        },
+                    });
+                </script>
+                <div class="bd-y">
+                    <dl>
+                        {volist name="news_lists" id="nl" length='1'}
+                        <dt class="clearfix">
+                            <div class="dt-z">{$nl.create_time|date="d",###}<em>{$nl.create_time|date="Y-m",###}</em>
+                            </div>
+                            <div class="dt-y">
+                                <h3><a href="{:getDetailUrl($nl.id,$nl.website)}" target="_blank">{$nl.title}</a></h3>
+                                <p>{$nl.create_time|date="Y-m-d",###}</p>
+                                <div class="i">
+                                    {$nl.content|leftstr_html=60}
+                                </div>
+                            </div>
+                        </dt>
+                        {/volist}
+                        {volist name="news_lists" id="nl" length='6' offset='1'}
+                        <dd class="clearfix"><em></em>
+                            <a href="{:getDetailUrl($nl.id,$nl.website)}" target="_blank">{$nl.title}</a>
+                            <span>{$nl.create_time|date="m-d",###}</span>
+                        </dd>
+                        {/volist}
+                    </dl>
+                </div>
+            </div>
+            <div class="m">
+                <a href="{:getCateUrl(3,'')}" target="_blank">更多动态</a>
+            </div>
+        </div>
+        <div class="b-3">
+            <div class="hd">
+                <h2>环境服务</h2>
+                <p>service</p>
+            </div>
+            <div class="tit">
+                <h2>环境服务</h2>
+                <p>service</p>
+            </div>
+            <ul class="clearfix">
+                {volist name="service" id="se" length='4'}
+                <li>
+                    <div class="se">
+                        <a href="{$se.website}">
+                            <h3>{$se.name}</h3>
+                            <p>{$se.en_name}</p>
+                            <img src="__UPLOAD_PATH__/{$se.pics.pic}" alt="{$se.pics.title}"/>
+                        </a>
+                        <img src="__UPLOAD_PATH__/{$se.pic}" alt="{$se.name}"/>
+                    </div>
+                </li>
+                {/volist}
+            </ul>
+        </div>
+        <div class="b-4">
+            <div class="hd">
+                <h2>投资者关系</h2>
+                <p>Investor</p>
+            </div>
+            <div class="bd">
+                <ul class="clearfix">
+                    {volist name="contact" id="co" length='10'}
+                    <li><a href="{:getDetailUrl($co.id,$co.website)}">{$co.title}</a><span>{$co.create_time|date="m-d",###}</span>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+            <div class="m">
+                <a href="{:getCateUrl(6,'')}">更多信息</a>
+            </div>
+        </div>
+        <div class="b-5">
+            <div class="hd">
+                <h2>工程案例</h2>
+                <p>portfolio</p>
+            </div>
+            <div class="tit">
+                <h2>工程案例</h2>
+                <p>portfolio</p>
+            </div>
+            <div class="bd">
+                <div class="swiper-container swiper-container-3">
+                    <div class="swiper-wrapper">
+                        {volist name="case" id="ca"}
+                        <div class="swiper-slide clearfix">
+                            <div class="p">
+                                <a href="{:getDetailUrl($ca.id,$ca.website)}">
+                                    <img src="__UPLOAD_PATH__/{$ca.photo}" alt="{$ca.title}"/>
+                                </a>
+                            </div>
+                            <div class="t">
+                                <h3><a href="{:getDetailUrl($ca.id,$ca.website)}">{$ca.title}</a></h3>
+                                <div class="i">
+                                    {$ca.intro}
+                                </div>
+                                <div class="more"><a href="{:getDetailUrl($ca.id,$ca.website)}">查看详细</a></div>
+                            </div>
+                        </div>
+                        {/volist}
+                    </div>
+                </div>
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+            <script>
+                var swiper3 = new Swiper('.b-5 .bd .swiper-container-3', {
+                    loop: true,
+                    autoplay: true,
+                    navigation: {
+                        nextEl: '.swiper-button-next',
+                        prevEl: '.swiper-button-prev',
+                    },
+                });
+            </script>
+        </div>
+        <div class="b-6">
+            <div class="hd">
+                <h2>视频展示</h2>
+                <p>Video</p>
+            </div>
+            <div class="bd">
+                <ul class="clearfix">
+                    {volist name="video_lists" id="vl" length='4'}
+                    <li>
+                        <a href="{:getDetailUrl($vl.id,$vl.website)}">
+                            <span></span>
+                            <img src="__UPLOAD_PATH__/{$vl.photo}" alt="{$vl.title}"/>
+                            <p>{$vl.title}</p>
+                        </a>
+                    </li>
+                    {/volist}
+                </ul>
+            </div>
+        </div>
+        <div class="b-7">
+            <div class="hd">
+                <h2>友情链接</h2>
+                <p>links</p>
+            </div>
+            <div class="tit">友情链接<em>Links</em></div>
+            <div class="tir clearfix">
+                {volist name="link" id="li" length='7'}
+                <a href="{$li.url}" target="_blank">{$li.name}</a>
+                {/volist}
+            </div>
+        </div>
+    </div>
+
+    {include file="public/footer" /}
+
+</div>
+</body>
+</html>

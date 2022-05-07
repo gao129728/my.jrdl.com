@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+{include file="public/head" /}
+<body>
+<!--头部-->
+{include file="public/header" /}
+<!--主要内容-->
+
+<div class="banner">
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {volist name='banner' id='vo'}
+            <div class="swiper-slide"><a href="{$vo.url}"><img src="__UPLOAD_PATH__/{$vo.photo}" class="PcBan" /></a>
+            </div>
+            {/volist}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+<div class="part part1">
+    <div class="content">
+        <div class="title">about<span>us</span></div>
+        <div class="little-title">关于我们</div>
+        <div class="cont">
+            {$aboutus.content|leftstr_html=50}
+        </div>
+        <a href="{:getCateUrl(9,'')}" class="more">了解更多 <img src="__IMG__/more.jpg" alt=""></a>
+        <ul class="num-box">
+            <li>
+                <div class="num"><span id="num1txt">{$aboutus.years}</span><i class="unit">年</i></div>
+                <div class="tit">事务所成立于</div>
+            </li>
+            <li>
+                <div class="num"><span id="num2txt">{$aboutus.peoples}</span><span>+</span><i class="unit">位</i></div>
+                <div class="tit">事务所人员</div>
+            </li>
+            <li>
+                <div class="num"><span id="num3txt">{$aboutus.cases}</span><span>+</span><i class="unit">件</i></div>
+                <div class="tit">处理成功案件</div>
+            </li>
+        </ul>
+        <img src="__UPLOAD_PATH__/{$aboutus.photo}" alt="" class="right-img">
+    </div>
+</div>
+<div class="part part2">
+    <div class="top-box">
+        <div class="title">business<span>area</span></div>
+        <div class="little-title">业务领域</div>
+    </div>
+    <div class="bottom-box">
+        <div class="top fec">
+            {volist name='ywly' id='vo' length='2'}
+            <a href="{:getDetailUrl($vo.id,$vo.website)}" class="item">
+                <div class="tit">{$vo.title}</div>
+                <div class="cont">{$vo.content|leftstr_html=35}</div>
+            </a>
+            {/volist}
+        </div>
+        <div class="bottom fec">
+            {volist name='ywly' id='vo' length='3' offset='2'}
+            <a href="{:getDetailUrl($vo.id,$vo.website)}" class="item">
+                <div class="tit">{$vo.title}</div>
+                <div class="cont">{$vo.content|leftstr_html=35}</div>
+            </a>
+            {/volist}
+        </div>
+        <a href="{:getCateUrl(12,'')}" class="more">了解我们更多的业务&rarr;</a>
+
+    </div>
+</div>
+<div class="part part3">
+    <div class="fse title-box">
+        <div>
+            <div class="title">Lawyer<span>team</span></div>
+            <div class="little-title">律师团队</div>
+        </div>
+        <a href="{:getCateUrl(13,'')}" class="more">more +</a>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {volist name='team' id='vos'}
+            <div class="swiper-slide">
+                <a href="{:getDetailUrl($vos.id,$vos.website)}">
+                    <div class="img-box"><img src="__UPLOAD_PATH__/{$vos.photo}" class="PcBan" /></div>
+                    <div class="name">{$vos.title}</div>
+                </a>
+            </div>
+            {/volist}
+        </div>
+        <div class="lawyer-prev"></div>
+        <div class="lawyer-next"></div>
+    </div>
+</div>
+<div class="part part4">
+    <div class="fse title-box">
+        <div>
+            <div class="title">News<span>Center</span></div>
+            <div class="little-title">新闻资讯</div>
+        </div>
+        <a href="{:getCateUrl(12,'')}" class="more">more +</a>
+    </div>
+    <div class="swiper-container">
+        <div class="swiper-wrapper">
+            {volist name='newas' id='vos'}
+            <div class="swiper-slide">
+                <a href="{:getDetailUrl($vos.id,$vos.website)}">
+                    <div class="img-box"><img src="__UPLOAD_PATH__/{$vos.photo}" class="PcBan" /></div>
+                    <div class="cont-box">
+                        <div class="tit">{$vos.title|leftstr_html=20}</div>
+                        <div class="cont">{$vos.content|leftstr_html=60}</div>
+                        <div class="time-box">
+                            <span><i class="iconfont icon-guankan"></i> {$vos.views}</span>
+                            <span><i class="iconfont icon-time1"></i> {$vos.create_time|date='Y-m-d',###}</span>
+                        </div>
+                    </div>
+                </a>
+            </div>
+            {/volist}
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</div>
+
+{include file="public/footer" /}
+
+</body>
+</html>
